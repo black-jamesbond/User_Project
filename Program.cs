@@ -16,22 +16,22 @@ builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddDbContext<UserContext>(dbContextOptions
     => dbContextOptions.UseSqlite("Data Source=UserInformation.db"));
 
-//builder.Services.AddAuthentication("Bearer")
-//    .AddJwtBearer(options =>
-//        {
-//            options.TokenValidationParameters = new()
-//            {
-//                ValidateIssuer = true,
-//                ValidateAudience = true,
-//                ValidateIssuerSigningKey = true,
-//                ValidIssuer = builder.Configuration["Authentication:Issuer"],
-//                ValidAudience = builder.Configuration["Authentication:Audience"],
-//                IssuerSigningKey = new SymmetricSecurityKey(
-//                    Convert.FromBase64String(builder.Configuration["Authentication:SecretForKey"]
-//                    ))
-//            };
-//        }
-//    );
+builder.Services.AddAuthentication("Bearer")
+   .AddJwtBearer(options =>
+       {
+           options.TokenValidationParameters = new()
+           {
+               ValidateIssuer = true,
+               ValidateAudience = true,
+               ValidateIssuerSigningKey = true,
+               ValidIssuer = builder.Configuration["Authentication:Issuer"],
+               ValidAudience = builder.Configuration["Authentication:Audience"],
+               IssuerSigningKey = new SymmetricSecurityKey(
+                   Convert.FromBase64String(builder.Configuration["Authentication:SecretForKey"]
+                   ))
+           };
+       }
+   );
 
 var app = builder.Build();
 
